@@ -1,18 +1,30 @@
-import { GetServerSideProps } from "next"
 import Head from "next/head"
 
+// Components
 import SubscribeButton from '../components/SubscribeButton'
 
+// Services
 import { stripe } from "../services/stripe"
 
+// Styles
 import styles from './home.module.scss'
 
+// Interfaces
+import { GetStaticProps } from "next"
 export interface HomeProps {
   product: {
     priceId: string
     productPrice: number
   }
 }
+
+/* 
+ 3 ways to render a website using NextJS
+
+ - CSR -> Client-side Render (SPA Way)
+ - SSR -> Server-side Render (Using the async getServerSideProps)
+ - SSG -> Static-site generation (Using the async getStaticProps and setting the revalidate)
+*/
 
 export default function Home({ product }: HomeProps) {
   return (
@@ -39,8 +51,8 @@ export default function Home({ product }: HomeProps) {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const price = await stripe.prices.retrieve('price_1LIFkbBZc4FZ4AorCGRiWV1D', {
+export const getStaticProps: GetStaticProps = async () => {
+  const price = await stripe.prices.retrieve(process.env.STRIPE_ITEM_ID!, {
     expand: ['product']
   })
 
@@ -55,6 +67,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
   return {
     props: {
       product
-    }
+    },
+    revalidate: 60 * 60 * 24 // 24 hours
   }
 }
