@@ -5,5 +5,7 @@ export function getPrismicCliente(req?: unknown) {
         accessToken: process.env.PRISMIC_ACCESS_TOKEN!,
     })
 
+    if (req) prismic.enableAutoPreviewsFromReq(req)
+
     return prismic
 }

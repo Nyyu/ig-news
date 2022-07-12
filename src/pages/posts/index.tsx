@@ -6,6 +6,7 @@ import { asText } from '@prismicio/helpers'
 import { getPrismicCliente } from "../../services/prismic"
 
 import styles from './styles.module.scss'
+import Link from "next/link"
 
 interface Post {
     slug: string
@@ -30,15 +31,17 @@ function Posts({ posts }: PostsProps) {
                 <div className={styles.posts}>
                     {
                         posts.map(post => (
-                            <a key={post.slug} href="#">
-                                <time>{post.updatedAt}</time>
-                                <strong>{post.title.map((item) => {
-                                    return item.text
-                                })}</strong>
-                                <p>{post.summary.map((item) => {
-                                    return item.text.substring(0, 100)
-                                })}</p>
-                            </a>
+                            <Link href={`/posts/${post.slug}`} key={post.slug}>
+                                <a>
+                                    <time>{post.updatedAt}</time>
+                                    <strong>{post.title.map((item) => {
+                                        return item.text
+                                    })}</strong>
+                                    <p>{post.summary.map((item) => {
+                                        return item.text.substring(0, 20)
+                                    })}</p>
+                                </a>
+                            </Link>
                         ))
                     }
                 </div>

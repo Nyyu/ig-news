@@ -4,6 +4,7 @@ import { api } from "../../services/api"
 
 import { toast } from 'react-toastify'
 import styles from './styles.module.scss'
+import { useRouter } from "next/router"
 
 interface SubscribeButtonProps {
     priceId: string
@@ -11,10 +12,16 @@ interface SubscribeButtonProps {
 
 export default function SubscribeButton({ priceId }: SubscribeButtonProps) {
     const { data: session } = useSession()
+    const router = useRouter()
 
     const handleSubscribe = async () => {
         if (!session) {
             signIn('github')
+            return
+        }
+
+        if (session.activeSubscription) {
+            router.push('/posts')
             return
         }
 
