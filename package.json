@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "clear && jest"
   },
   "dependencies": {
     "@prismicio/client": "^6.6.1",
@@ -33,8 +34,10 @@
     "babel-jest": "^28.1.3",
     "eslint": "8.19.0",
     "eslint-config-next": "12.2.0",
+    "identity-obj-proxy": "^3.0.0",
     "jest": "^28.1.3",
     "jest-dom": "^4.0.0",
+    "jest-environment-jsdom": "^28.1.3",
     "typescript": "4.7.4"
   }
 }
